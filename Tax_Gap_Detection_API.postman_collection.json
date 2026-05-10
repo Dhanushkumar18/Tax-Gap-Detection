@@ -1,0 +1,193 @@
+{
+  "info": {
+    "name": "Tax Gap Detection API",
+    "description": "API collection for Tax Gap Detection & Compliance Validation Service",
+    "version": "1.0.0",
+    "schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json"
+  },
+  "item": [
+    {
+      "name": "Transactions",
+      "item": [
+        {
+          "name": "Upload Transaction Batch",
+          "request": {
+            "method": "POST",
+            "header": [
+              {
+                "key": "Content-Type",
+                "value": "application/json"
+              },
+              {
+                "key": "Authorization",
+                "value": "Basic YWRtaW46cGFzc3dvcmQ="
+              }
+            ],
+            "body": {
+              "mode": "raw",
+              "raw": "{\"transactions\":[{\"transactionId\":\"TXN-001\",\"date\":\"2024-01-15\",\"customerId\":1001,\"amount\":\"50000.00\",\"taxRate\":\"0.18\",\"reportedTax\":\"9000.00\",\"transactionType\":\"SALE\"}]}"
+            },
+            "url": {
+              "raw": "{{base_url}}/api/v1/transactions/upload-batch",
+              "host": ["{{base_url}}"],
+              "path": ["api", "v1", "transactions", "upload-batch"]
+            }
+          }
+        },
+        {
+          "name": "Get Transaction",
+          "request": {
+            "method": "GET",
+            "header": [
+              {
+                "key": "Authorization",
+                "value": "Basic YWRtaW46cGFzc3dvcmQ="
+              }
+            ],
+            "url": {
+              "raw": "{{base_url}}/api/v1/transactions/1",
+              "host": ["{{base_url}}"],
+              "path": ["api", "v1", "transactions", "1"]
+            }
+          }
+        },
+        {
+          "name": "Get Customer Transactions",
+          "request": {
+            "method": "GET",
+            "header": [
+              {
+                "key": "Authorization",
+                "value": "Basic YWRtaW46cGFzc3dvcmQ="
+              }
+            ],
+            "url": {
+              "raw": "{{base_url}}/api/v1/transactions/customer/1001",
+              "host": ["{{base_url}}"],
+              "path": ["api", "v1", "transactions", "customer", "1001"]
+            }
+          }
+        }
+      ]
+    },
+    {
+      "name": "Exceptions",
+      "item": [
+        {
+          "name": "Get All Exceptions",
+          "request": {
+            "method": "GET",
+            "header": [
+              {
+                "key": "Authorization",
+                "value": "Basic YWRtaW46cGFzc3dvcmQ="
+              }
+            ],
+            "url": {
+              "raw": "{{base_url}}/api/v1/exceptions",
+              "host": ["{{base_url}}"],
+              "path": ["api", "v1", "exceptions"]
+            }
+          }
+        },
+        {
+          "name": "Get Exceptions by Customer",
+          "request": {
+            "method": "GET",
+            "header": [
+              {
+                "key": "Authorization",
+                "value": "Basic YWRtaW46cGFzc3dvcmQ="
+              }
+            ],
+            "url": {
+              "raw": "{{base_url}}/api/v1/exceptions/customer/1001",
+              "host": ["{{base_url}}"],
+              "path": ["api", "v1", "exceptions", "customer", "1001"]
+            }
+          }
+        },
+        {
+          "name": "Get Exceptions by Severity",
+          "request": {
+            "method": "GET",
+            "header": [
+              {
+                "key": "Authorization",
+                "value": "Basic YWRtaW46cGFzc3dvcmQ="
+              }
+            ],
+            "url": {
+              "raw": "{{base_url}}/api/v1/exceptions/severity/HIGH",
+              "host": ["{{base_url}}"],
+              "path": ["api", "v1", "exceptions", "severity", "HIGH"]
+            }
+          }
+        },
+        {
+          "name": "Get Exceptions by Rule",
+          "request": {
+            "method": "GET",
+            "header": [
+              {
+                "key": "Authorization",
+                "value": "Basic YWRtaW46cGFzc3dvcmQ="
+              }
+            ],
+            "url": {
+              "raw": "{{base_url}}/api/v1/exceptions/rule/HighValueTransactionRule",
+              "host": ["{{base_url}}"],
+              "path": ["api", "v1", "exceptions", "rule", "HighValueTransactionRule"]
+            }
+          }
+        }
+      ]
+    },
+    {
+      "name": "Reports",
+      "item": [
+        {
+          "name": "Customer Tax Summary",
+          "request": {
+            "method": "GET",
+            "header": [
+              {
+                "key": "Authorization",
+                "value": "Basic YWRtaW46cGFzc3dvcmQ="
+              }
+            ],
+            "url": {
+              "raw": "{{base_url}}/api/v1/reports/customer-tax-summary/1001",
+              "host": ["{{base_url}}"],
+              "path": ["api", "v1", "reports", "customer-tax-summary", "1001"]
+            }
+          }
+        },
+        {
+          "name": "Exception Summary Report",
+          "request": {
+            "method": "GET",
+            "header": [
+              {
+                "key": "Authorization",
+                "value": "Basic YWRtaW46cGFzc3dvcmQ="
+              }
+            ],
+            "url": {
+              "raw": "{{base_url}}/api/v1/reports/exception-summary",
+              "host": ["{{base_url}}"],
+              "path": ["api", "v1", "reports", "exception-summary"]
+            }
+          }
+        }
+      ]
+    }
+  ],
+  "variable": [
+    {
+      "key": "base_url",
+      "value": "http://localhost:8080",
+      "type": "string"
+    }
+  ]
+}
