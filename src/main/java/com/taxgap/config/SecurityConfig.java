@@ -27,20 +27,25 @@ public class SecurityConfig {
     }
     
     @Bean
-    public UserDetailsService userDetailsService() {
+    public UserDetailsService userDetailsService(PasswordEncoder passwordEncoder) {
         InMemoryUserDetailsManager manager = new InMemoryUserDetailsManager();
+        
+        // Create users with properly encoded passwords
         manager.createUser(User.withUsername("admin")
-            .password("{noop}password")
+            .password(passwordEncoder.encode("admin123"))
             .roles("ADMIN")
             .build());
+        
         manager.createUser(User.withUsername("auditor1")
-            .password("{noop}password")
+            .password(passwordEncoder.encode("auditor123"))
             .roles("AUDITOR")
             .build());
+        
         manager.createUser(User.withUsername("auditor2")
-            .password("{noop}password")
+            .password(passwordEncoder.encode("auditor123"))
             .roles("AUDITOR")
             .build());
+        
         return manager;
     }
 
@@ -52,18 +57,19 @@ public class SecurityConfig {
     @Bean
     public SecurityFilterChain filterChain(HttpSecurity http) throws Exception {
         http
-            .csrf().disable()
-            .authorizeHttpRequests()
+            .csrf(csrf -> csrf.disable())
+            .authorizeHttpRequests(authz -> authz
                 .requestMatchers("/h2-console/**").permitAll()
                 .requestMatchers("/api/v1/**").authenticated()
                 .anyRequest().permitAll()
-            .and()
-            .httpBasic()
-            .and()
-            .sessionManagement()
+            )
+            .httpBasic(httpBasic -> {})
+            .sessionManagement(session -> session
                 .sessionCreationPolicy(SessionCreationPolicy.STATELESS)
-            .and()
-            .headers().frameOptions().sameOrigin();
+            )
+            .headers(headers -> headers
+                .frameOptions(frame -> frame.sameOrigin())
+            );
         
         return http.build();
     }
